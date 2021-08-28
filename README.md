@@ -1,6 +1,6 @@
 # Share Chrono
 
-# Setup
+# Setup back
 
 You will need to run a local redis
 
@@ -39,7 +39,7 @@ Pycharm support Pipenv here the [documentation](https://www.jetbrains.com/help/p
 
 **Install from Pipfile, if there is one:**
 
-    $ pipenv install
+    $ cd back && pipenv install
 
 **To install dev packages**
 
