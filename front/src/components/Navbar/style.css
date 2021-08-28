@@ -1,0 +1,11 @@
+.logo_team_swan {
+  width: 150px;
+  cursor: pointer;
+}
+
+.toolbarContainer {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}

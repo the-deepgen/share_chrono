@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.marginTop20px {
+  margin-top: 20px;
+}
