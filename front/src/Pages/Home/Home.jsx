@@ -1,7 +1,7 @@
 import "./style.css";
 import ContainedButtons from "../../components/Button/Button";
 
-const Home = () => {
+const Home = ({ history }) => {
   return (
     <div className="container marginTop20px">
       <main className="main">
@@ -11,7 +11,7 @@ const Home = () => {
         <div className="buttonContainer">
           <ContainedButtons
             text="Créer un chrono"
-            onClick={(e) => console.log(e)}
+            onClick={(e) => history.push("/user")}
             size="large"
           />
         </div>

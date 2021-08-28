@@ -39,9 +39,20 @@ function App() {
           </div>
 
           <Switch>
-            <Route path="/" exact render={(props) => <Home />} />
-            <Route path="/chrono/:id" render={(props) => <Chrono />} />
-            <Route path="/user" render={(props) => <User />} />
+            <Route
+              path="/"
+              exact
+              render={({ match, history }) => (
+                <Home match={match} history={history} />
+              )}
+            />
+            <Route
+              path="/chrono/:id"
+              render={({ match, history }) => (
+                <Chrono match={match} history={history} />
+              )}
+            />
+            <Route path="/user" render={() => <User />} />
           </Switch>
         </Router>
       </modalContext.Provider>
