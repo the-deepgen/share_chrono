@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,9 @@ export default function Navbar() {
     <div className={classes.root}>
       <AppBar position="static" color="transparent">
         <Toolbar className="toolbarContainer">
-          <img src="2.png" className="logo_team_swan" />
+          <Link to="/">
+            <img src="2.png" className="logo_team_swan" />
+          </Link>
           {/* <IconButton
             edge="start"
             className={classes.menuButton}
