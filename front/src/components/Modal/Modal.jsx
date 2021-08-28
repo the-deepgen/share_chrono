@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+
+import userInfosContext from "../../Contexts/userInfos";
+import userAPI from "../../services/userAPI";
 
 function getModalStyle() {
   const top = 50;
@@ -25,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleModal() {
+  const { userName, setUserName } = useContext(userInfosContext);
+
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -38,11 +43,19 @@ export default function SimpleModal() {
     setOpen(false);
   };
 
+  const saveUserName = (userName) => {
+    userAPI.setUsername(userName);
+    setUserName(userName);
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
+      <h2 id="simple-modal-title">Merci d'indiquer votre nom</h2>
       <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        <input
+          onChange={(e) => saveUserName(e.target.value)}
+          value={userName}
+        />
       </p>
     </div>
   );
