@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-
+import "./style.css";
 import userInfosContext from "../../Contexts/userInfos";
 import userAPI from "../../services/userAPI";
 import ContainedButtons from "../Button/Button";
+import TextField from "@material-ui/core/TextField";
 
 function getModalStyle() {
   const top = 50;
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    borderRadius: "6px",
   },
 }));
 
@@ -64,12 +66,22 @@ export default function SimpleModal() {
         <div style={modalStyle} className={classes.paper}>
           <h2 id="simple-modal-title">Merci d'indiquer votre nom</h2>
           <p id="simple-modal-description">
-            <input
+            <TextField
+              id="outlined-basic"
+              label="Votre nom"
+              variant="outlined"
               onChange={(e) => saveUserName(e.target.value)}
               value={userName}
+              fullWidth
             />
           </p>
-          <ContainedButtons />
+          <div className="buttonContainer">
+            <ContainedButtons
+              text="OK"
+              disabled={!userName}
+              onClick={handleClose}
+            />
+          </div>
         </div>
       </Modal>
     </div>
