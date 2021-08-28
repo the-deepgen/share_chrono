@@ -4,6 +4,7 @@ import Modal from "@material-ui/core/Modal";
 
 import userInfosContext from "../../Contexts/userInfos";
 import userAPI from "../../services/userAPI";
+import ContainedButtons from "../Button/Button";
 
 function getModalStyle() {
   const top = 50;
@@ -40,25 +41,17 @@ export default function SimpleModal() {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    if (userName) {
+      setOpen(false);
+    } else {
+      return;
+    }
   };
 
   const saveUserName = (userName) => {
     userAPI.setUsername(userName);
     setUserName(userName);
   };
-
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Merci d'indiquer votre nom</h2>
-      <p id="simple-modal-description">
-        <input
-          onChange={(e) => saveUserName(e.target.value)}
-          value={userName}
-        />
-      </p>
-    </div>
-  );
 
   return (
     <div>
@@ -68,7 +61,16 @@ export default function SimpleModal() {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        {body}
+        <div style={modalStyle} className={classes.paper}>
+          <h2 id="simple-modal-title">Merci d'indiquer votre nom</h2>
+          <p id="simple-modal-description">
+            <input
+              onChange={(e) => saveUserName(e.target.value)}
+              value={userName}
+            />
+          </p>
+          <ContainedButtons />
+        </div>
       </Modal>
     </div>
   );
