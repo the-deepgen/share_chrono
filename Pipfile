@@ -12,3 +12,7 @@ python-dotenv = "==0.19.0"
 
 [requires]
 python_version = "3.8"
+
+[packages.pyjwt]
+extras = [ "crypto",]
+version = "==2.1.0"
