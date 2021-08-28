@@ -148,3 +148,4 @@ config.json
 config.yaml
 
 .env
+.env.front
