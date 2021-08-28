@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import "./style.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,9 +14,7 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
-  },
+  title: {},
 }));
 
 export default function Navbar() {
@@ -24,7 +23,8 @@ export default function Navbar() {
   return (
     <div className={classes.root}>
       <AppBar position="static" color="transparent">
-        <Toolbar>
+        <Toolbar className="toolbarContainer">
+          <img src="2.png" className="logo_team_swan" />
           {/* <IconButton
             edge="start"
             className={classes.menuButton}
