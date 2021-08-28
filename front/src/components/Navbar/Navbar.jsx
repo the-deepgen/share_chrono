@@ -40,9 +40,11 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography variant="h4" className={classes.title}>
-            Share Chrono
-          </Typography>
+          <Link to="/">
+            <Typography variant="h4" className={classes.title}>
+              Share Chrono
+            </Typography>
+          </Link>
           <Typography variant="h6" className={classes.title}>
             <Link to="/user">{userName}</Link>
           </Typography>
