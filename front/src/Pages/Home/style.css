@@ -1,0 +1,38 @@
+.main {
+  max-width: 1000px;
+  margin: 60px auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.main img {
+  width: 400px;
+}
+
+.main .imageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 767px) {
+  .main {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  .main img {
+    width: 200px;
+  }
+
+  .buttonContainer > div {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+  }
+}
