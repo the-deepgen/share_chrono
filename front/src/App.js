@@ -9,6 +9,7 @@ import userAPI from "./services/userAPI";
 
 // Contexts
 import userInfosContext from "./Contexts/userInfos";
+import SimpleModal from "./components/Modal/Modal";
 
 function App() {
   const [userName, setUserName] = useState(userAPI.getUsername());
@@ -25,6 +26,7 @@ function App() {
         <div className="App">
           <Navbar />
           {!userName && <p>lol</p>}
+          <SimpleModal />
         </div>
 
         <Switch>
