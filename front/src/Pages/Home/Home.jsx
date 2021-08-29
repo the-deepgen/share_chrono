@@ -11,7 +11,12 @@ const Home = ({ history }) => {
         <div className="buttonContainer">
           <ContainedButtons
             text="Créer un chrono"
-            onClick={(e) => history.push("/user")}
+            onClick={(e) => {
+              console.log(
+                "Get the JWT from back-end and add it in the URL of history.push"
+              );
+              history.push("/chrono/1");
+            }}
             size="large"
           />
         </div>
