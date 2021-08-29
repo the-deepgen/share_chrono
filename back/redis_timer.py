@@ -6,8 +6,13 @@ from typing import List, Optional
 import redis
 from redis import Redis
 
+from models import Timer, Checkpoint
+
 
 class RedisTimer:
+    """
+    Class to save and get information from timers
+    """
 
     def __init__(self, redis_client: Redis):
         """
@@ -36,26 +41,43 @@ class RedisTimer:
         )
         return cls(client)
 
-    def creat_timer(self, key: str, name: str, utc_timestamp: int):
+    def creat_timer(self, key: str, name: str, pseudo: str, utc_timestamp: int) -> Timer:
         """
         Creat a new timer
         Args:
             key: Key of the timer (redis key)
             utc_timestamp: Timestamp of the creation
+            pseudo: Ho creat the tiùer
             name: Name of the timer
 
         Returns:
 
         """
         body = {
+            "pseudo": pseudo,
             "name": name,
             "created_at": utc_timestamp,
-            "time": 0
+            "started_at": 0
         }
-        self.redis_client.rpush(key, body)
-        return body
+        self.redis_client.rpush(key, json.dumps(body))
+        return Timer(**body)
 
-    def get_timer(self, key: str) -> Optional[dict]:
+    def start_timer(self, key: str, started_at: int) -> Timer:
+        """
+        Start the timer (set the started_at attribute with the timestamp)
+        Args:
+            key:
+            started_at:
+
+        Returns:
+
+        """
+        body = json.loads(self.redis_client.lpop(key))
+        body["started_at"] = started_at
+        self.redis_client.lpush(key, json.dumps(body))
+        return Timer(**body)
+
+    def get_timer(self, key: str) -> Optional[Timer]:
         """
         Get timer values
         Args:
@@ -63,24 +85,12 @@ class RedisTimer:
 
         Returns:
             Timer body
-            {
-                "name": (string)
-                "created_at": (int) utc timestamp,
-                "time": (int) timer duration in seconds,
-                "history": (list of checkpoint)
-            }
-            Checkpoint Body
-            {
-                "name": (string) Name of the user ho add the checkpoint,
-                "duration": (int) execution time in seconds,
-                "extra": (dict) extra information
-            }
         """
         timer = [json.loads(v) for v in self.redis_client.lrange(key, 0, -1)]
         if len(timer) == 0:
             return None
-        timer_information = timer.pop(0)
-        timer_information["history"] = timer
+        timer_information = Timer(**timer.pop(0))
+        timer_information.history = [Checkpoint(**checkpoint) for checkpoint in timer]
         return timer_information
 
     def get_timer_keys(self) -> List[str]:
@@ -91,7 +101,7 @@ class RedisTimer:
         """
         return list(self.redis_client.keys())
 
-    def delete_timer(self, key: str) -> Optional[dict]:
+    def delete_timer(self, key: str) -> Optional[Timer]:
         """
         Delete a timer and return the list
         Args:
@@ -104,18 +114,20 @@ class RedisTimer:
         self.redis_client.delete(key)
         return response
 
-    def add_checkpoint(self, key: str, name: str, duration: int):
+    def add_checkpoint(self, key: str, name: str, utc_timestamp: int) -> Checkpoint:
         """
         Add a metric into redis
         Args:
             key: Key of the timer (redis key)
             name: Name of the user ho add the checkpoint,
-            duration: execution time in seconds
+            utc_timestamp: execution time timestamp
 
 
         Returns:
         """
-        self.redis_client.rpush(key, json.dumps({"name": name, "duration": duration, "extra": self.extra}))
+        body = {"name": name, "timestamp": utc_timestamp, "extra": self.extra}
+        self.redis_client.rpush(key, json.dumps(body))
+        return Checkpoint(**body)
 
     def set_extra(self, **kwargs):
         """
