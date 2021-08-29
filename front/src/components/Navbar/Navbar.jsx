@@ -7,6 +7,8 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import "./style.css";
 import { Link } from "react-router-dom";
+import userInfosContext from "../../Contexts/userInfos";
+import { useContext } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const classes = useStyles();
+
+  const { userName } = useContext(userInfosContext);
 
   return (
     <div className={classes.root}>
@@ -36,8 +40,13 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton> */}
+          <Link to="/">
+            <Typography variant="h5" className={classes.title}>
+              Share Chrono
+            </Typography>
+          </Link>
           <Typography variant="h6" className={classes.title}>
-            Share Chrono
+            <Link to="/user">{userName}</Link>
           </Typography>
         </Toolbar>
       </AppBar>
