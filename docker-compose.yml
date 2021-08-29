@@ -7,3 +7,11 @@ services:
     build: ./nginx
     container_name: chrono_nginx
     restart: always
+  redis:
+    image: redis
+    container_name: chrono_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=password123
