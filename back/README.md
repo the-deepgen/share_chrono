@@ -11,7 +11,6 @@ Then add `redis` to the `/etc/hosts` file
     127.0.0.1       localhost
     127.0.0.1       redis
 
-
 ## Pipenv
 
 **Note**: You will need python 3.8
@@ -19,7 +18,6 @@ Then add `redis` to the `/etc/hosts` file
 Into an Ubuntu 20.04.2
 
     sudo apt install virtualenv python3.8-dev python3-pip python3-tk cmake
-
 
 ### Setup
 
@@ -56,7 +54,7 @@ Pycharm support Pipenv here the [documentation](https://www.jetbrains.com/help/p
     $ pipenv shell
     $ python --version
 
-## Specify versions of python
+### Specify versions of python
 
 Use Python 3:
 
@@ -69,3 +67,9 @@ Use Python3.6:
 Use Python 2.7.14:
 
     $ pipenv --python 2.7.14
+
+## Start
+
+To start the back as dev
+
+    cd back && python server.py 
