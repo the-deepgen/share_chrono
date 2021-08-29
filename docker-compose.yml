@@ -1,0 +1,9 @@
+services:
+  front:
+    build: ./front
+    container_name: chrono_front
+    restart: always
+  nginx:
+    build: ./nginx
+    container_name: chrono_nginx
+    restart: always
