@@ -3,10 +3,17 @@ services:
     build: ./front
     container_name: chrono_front
     restart: always
+  back:
+    build: ./back
+    container_name: chrono_back
+    restart: always
   nginx:
     build: ./nginx
     container_name: chrono_nginx
     restart: always
+    ports:
+      - "80:80"
+      - "443:443"
   redis:
     image: redis
     container_name: chrono_redis
