@@ -4,7 +4,7 @@ import os
 from typing import Dict
 
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, render_template
 from flask import request
 from flask_socketio import SocketIO
 from redis import Redis
@@ -51,6 +51,21 @@ jwt_manager = JWTManager(os.environ["JWT_SECRET_KEY"], RedisTimer(REDIS_CLIENT))
 timers_pools: Dict[str, SocketTimer] = dict()
 
 
+@app.route("/", methods=["GET"])
+def index():
+    """
+    index ui
+    Returns:
+
+    """
+
+    if len(timers_pools) > 0:
+        key, timer = next(iter(timers_pools.items()))
+        return render_template("index.html", data=key)
+    # only by sending this page first will the client be connected to the socketio instance
+    return render_template("index.html")
+
+
 @app.route("/timer", methods=["POST"])
 def creat_timer():
     """
@@ -83,7 +98,7 @@ def creat_timer():
     token, timer_body = jwt_manager.creat_timer(name=timer_name, pseudo=pseudo, utc_timestamp=get_utc_timestamp())
     # Update the timers pool thread
     timers_pools[token] = SocketTimer(key=token, timer=timer_body, socket_io=socket_io, jwt_manager=jwt_manager)
-    return api_response(token=token, timer_body=timer_body)
+    return api_response(token=token, timer_body=timer_body.dict())
 
 
 @app.route("/timer/start", methods=["POST"])
